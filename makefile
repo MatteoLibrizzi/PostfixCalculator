@@ -1,18 +1,25 @@
-calculator: main.o stack.o calculator.o utils.o
-	gcc -o calculator $^ -ansi -lm -lreadline
+flags = -ansi -Wall
+flagsExe = $(flags) -L. -lstack -Wl,-rpath,. -lm -lreadline
+
+calculator: main.o libstack.so calculator.o utils.o
+	gcc -o calculator $^ $(flagsExe)
 
 main.o: main.c
-	gcc -c $^ -ansi
+	gcc -c $^ $(flags)
+
+libstack.so: stack.o
+	gcc -shared -o libstack.so $^
 
 stack.o: stack.c
-	gcc -c $^ -ansi
+	gcc -fPIC -c $^ $(flags)
 
 calculator.o: calculator.c
-	gcc -c $^ -ansi -lm -lreadline
+	gcc -c $^ $(flags) -lm -lreadline
 
 utils.o: utils.c
-	gcc -c $^ -ansi -lm -lreadline
+	gcc -c $^ $(flags) -lm -lreadline
 
 clean:
 	rm *.o
+	rm *.so
 	rm calculator

@@ -1,3 +1,4 @@
 calculator
 *.o
+*.so
 .vscode/*

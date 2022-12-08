@@ -1,17 +1,7 @@
 #ifndef _types_
 #define _types_
 
-typedef struct node {
-    int value;
-    struct node * next;
-} Node;
-typedef Node* NodePtr;
-
-typedef struct stack {
-    NodePtr top;
-    int size;
-} Stack;
-typedef Stack* StackPtr;
+#include "stack.h"
 
 typedef struct calculator {
     StackPtr operands;

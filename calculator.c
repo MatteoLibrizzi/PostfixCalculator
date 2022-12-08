@@ -48,7 +48,7 @@ void maps_quit() {
 }
 
 int hasEnoughOperandsForOperation(CalculatorPtr calculator, char operation) {
-    return stack_size(calculator->operands) >= minimumNumberOfOperands[operation];
+    return stack_size(calculator->operands) >= minimumNumberOfOperands[(int) operation];
 }
 
 CalculatorPtr calculator_init() {
@@ -69,7 +69,7 @@ int calculator_input(CalculatorPtr calculator, char* s) {/*handle calculator inp
         char c = *s;
         if (isOperand(c) || isCommand(c)) {/*check if it is a valid char*/
             if (hasEnoughOperandsForOperation(calculator,c)) {/*check if the stack has enough operands*/
-                calculatorFunction calculatorFunction = functionMap[c];/*get the function to run from the map*/
+                calculatorFunction calculatorFunction = functionMap[(int) c];/*get the function to run from the map*/
                 return (*calculatorFunction)(calculator);/*run the function*/
             } else {
                 fprintf(stderr,"    Not enough operands\n");
@@ -84,7 +84,7 @@ int calculator_input(CalculatorPtr calculator, char* s) {/*handle calculator inp
     return -1;
 }
 int calculator_quit(CalculatorPtr calculator) {
-    stack_quit(calculator->operands);
+    stack_free(calculator->operands);
     maps_quit();
     free(calculator);
     return 0;

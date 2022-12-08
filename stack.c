@@ -6,6 +6,7 @@
 StackPtr stack_init() {
     StackPtr stack = (StackPtr) malloc(sizeof(Stack));
     stack->size = 0;
+    return stack;
 }
 
 int stack_empty(StackPtr stack) {
@@ -57,7 +58,7 @@ int stack_size(StackPtr stack) {
     return stack->size;
 }
 
-int stack_quit(StackPtr stack) {/*free everything*/
+int stack_free(StackPtr stack) {/*free everything*/
     if (!stack_empty(stack)) {
         NodePtr freePtr = stack->top;
         NodePtr next;
